@@ -76,8 +76,13 @@ const lvls = {
 };
 
 // Default level
-let defaultLevel        = "Normal";
+let defaultLevel        = "Easy";
 let defaultLevelSeconds = lvls[defaultLevel];
+
+let words = defaultLevel === "Easy" 
+        ? [...easyLvlWords] 
+            : defaultLevel === "Normal" 
+                ? [...normalLvlWords] : [...hardLvlWords];
 
 // Selectors
 let startBtn      = document.querySelector(".start");
@@ -94,7 +99,7 @@ let finishMessage = document.querySelector(".finish");
 lvlNameSpan.innerHTML   = defaultLevel;
 secondsSpan.innerHTML   = defaultLevelSeconds;
 timeLeftSpan.innerHTML  = defaultLevelSeconds;
-scoreTotal.innerHTML    = medmLvlWords.length;
+scoreTotal.innerHTML    = words.length;
 
 // Disable paste event
 input.onpaste = function () {
@@ -110,48 +115,23 @@ startBtn.onclick = function () {
 
 function generateWord() {
   // Get random word from words array:
-  let randomWord = "";
-  geneWordBasedOnLvl(randomWord);
+  let randomWord = words[Math.floor(Math.random() * words.length)];
   wordDisplay.innerHTML = randomWord;
   // Get random word index:
   let randomWordIdx = words.indexOf(randomWord);
   // Remove random word from words array:
-  medmLvlWords.splice(randomWordIdx, 1);
+  words.splice(randomWordIdx, 1);
   // Empty upcoming words:
   upcomingWords.innerHTML = "";
   // Generate upcoming words:
-  for (let i = 0; i < medmLvlWords.length; i++) {
+  for (let i = 0; i < words.length; i++) {
     // Create div element:
     let div = document.createElement("div");
-    let txt = document.createTextNode(medmLvlWords[i]);
+    let txt = document.createTextNode(words[i]);
     div.appendChild(txt);
     upcomingWords.appendChild(div);
   }
   startPlay();
-}
-
-function geneWordBasedOnLvl(randomWord) {
-  if (defaultLevel === "Easy") {
-    randomWord = easyLvlWords[Math.floor(Math.random() * easyLvlWords.length)];
-  } else if((defaultLevel === "Normal")) {
-    randomWord = normalLvlWords[Math.floor(Math.random() * normalLvlWords.length)];
-  } else {
-    randomWord = hardLvlWords[Math.floor(Math.random() * hardLvlWords.length)];
-  }
-  return randomWord;
-}
-
-function removeRandomWordFromArray(randomWord, randomWordIdx) {
-  if (defaultLevel === "Easy") {
-    randomWordIdx = easyLvlWords.indexOf(randomWord);
-    return easyLvlWords.splice(randomWordIdx, 1);
-  } else if((defaultLevel === "Normal")) {
-    randomWordIdx = normalLvlWords.indexOf(randomWord);
-    return normalLvlWords.splice(randomWordIdx, 1);
-  } else {
-    randomWordIdx = hardLvlWords.indexOf(randomWord);
-    return hardLvlWords.splice(randomWordIdx, 1);
-  }
 }
 
 function startPlay() {
@@ -167,7 +147,7 @@ function startPlay() {
         input.value = '';
         // Increase Score
         scoreGot.innerHTML++;
-        if (medmLvlWords.length > 0) {
+        if (words.length > 0) {
           // Call Generate Word Function
           generateWord();
         } else {
