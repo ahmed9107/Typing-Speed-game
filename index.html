@@ -12,8 +12,15 @@
     <div class="container">
       <div class="message">
         You Are Playing On
-        <span class="lvl"></span> Level
-        & You Have <span class="seconds"></span> Seconds To Type The Word
+        <span>[</span>
+        <select name="lvls" class="lvls" id="lvls">
+          <option value="easy">Easy</option>
+          <option value="normal">Normal</option>
+          <option value="hard">Hard</option>
+        </select>
+        <span>]</span>
+        <!-- <span class="lvl"></span>  -->
+        Level & You Have <span class="seconds"></span> Seconds To Type The Word
       </div>
       <div class="start">Start Playing</div>
       <div class="the-word"></div>

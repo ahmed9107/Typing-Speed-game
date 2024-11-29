@@ -32,14 +32,20 @@ body {
   border-radius: 6px;
   text-align: center;
 }
+.message select {
+  border: none;
+  outline: none;
+  font-weight: bold;
+  color: #009688;
+}
 .message span {
   font-weight: bold;
   color: #009688;
 }
-.message span::before {
+.message .seconds::before {
   content: "[ ";
 }
-.message span::after {
+.message .seconds::after {
   content: " ]";
 }
 .start {

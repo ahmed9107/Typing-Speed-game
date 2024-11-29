@@ -70,24 +70,31 @@ let hardLvlWords = [
 
 // Setting Levels
 const lvls = {
-  "Easy"  : 7,
-  "Normal": 5,
-  "Hard"  : 3
+  "easy"  : 7,
+  "normal": 5,
+  "hard"  : 3
 };
 
 // Default level
-let defaultLevel        = "Easy";
+let defaultLevel        = "easy";
+// let d = document.querySelectorAll(".difficulty input");
+// let arr = Array.from(d);
+// for (let i = 0; i < arr.length; i++) {
+//   arr[i].addEventListener("change", function() {
+//     defaultLevel = this.value;
+//   });
+// }
 let defaultLevelSeconds = lvls[defaultLevel];
 
-let words = defaultLevel === "Easy" 
+let words = defaultLevel === "easy" 
         ? [...easyLvlWords] 
-            : defaultLevel === "Normal" 
+            : defaultLevel === "normal" 
                 ? [...normalLvlWords] : [...hardLvlWords];
 
 // Selectors
 let startBtn      = document.querySelector(".start");
 let wordDisplay   = document.querySelector(".the-word");
-let lvlNameSpan   = document.querySelector(".message .lvl");
+let lvlName       = document.querySelector(".message .lvls");
 let secondsSpan   = document.querySelector(".message .seconds");
 let upcomingWords = document.querySelector(".upcoming-words");
 let input         = document.querySelector(".input");
@@ -96,7 +103,8 @@ let scoreGot      = document.querySelector(".score .got");
 let scoreTotal    = document.querySelector(".score .total");
 let finishMessage = document.querySelector(".finish");
 
-lvlNameSpan.innerHTML   = defaultLevel;
+// lvlNameSpan.innerHTML   = defaultLevel;
+console.log(lvlName.value);
 secondsSpan.innerHTML   = defaultLevelSeconds;
 timeLeftSpan.innerHTML  = defaultLevelSeconds;
 scoreTotal.innerHTML    = words.length;
@@ -151,18 +159,18 @@ function startPlay() {
           // Call Generate Word Function
           generateWord();
         } else {
-          let span = document.createElement("span");
-          span.className = 'good';
-          let spanText = document.createTextNode("Congratz");
+          let span        = document.createElement("span");
+          span.className  = 'good';
+          let spanText    = document.createTextNode("Congratz");
           span.appendChild(spanText);
           finishMessage.appendChild(span);
           // Remove Upcoming Words Box
           upcomingWords.remove();
         }
       } else {
-        let span = document.createElement("span");
-        span.className = 'bad';
-        let spanText = document.createTextNode("Game Over");
+        let span        = document.createElement("span");
+        span.className  = 'bad';
+        let spanText    = document.createTextNode("Game Over");
         span.appendChild(spanText);
         finishMessage.appendChild(span);
       }
