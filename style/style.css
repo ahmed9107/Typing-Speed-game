@@ -10,7 +10,7 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 .game {
-  background-color: #eee;
+  background-color: #333742;
   min-height: 100vh;
 }
 .container {
@@ -18,21 +18,23 @@ body {
   max-width: 900px;
 }
 .name {
-  background-color: var(--main-color);
-  color: white;
+  background-color: #1e2026;
+  color: #EA5165;
   padding: 20px;
   font-size: 25px;
   text-align: center;
   font-weight: bold;
 }
 .message {
-  background-color: white;
+  background-color: #454D5A;
+  color: #f5deb3;
   padding: 15px;
   margin: 15px 0;
   border-radius: 6px;
   text-align: center;
 }
 .message select {
+  background-color: #454D5A;
   border: none;
   outline: none;
   font-weight: bold;
@@ -66,6 +68,8 @@ body {
 }
 .input {
   margin: 15px 0;
+  background-color: #454D5A;
+  color: #f5deb3;
   width: 100%;
   display: block;
   padding: 15px;
@@ -80,7 +84,8 @@ body {
   outline: none;
 }
 .upcoming-words {
-  background-color: white;
+  background-color: #454D5A;
+  color: #f5deb3;
   margin: 15px 0;
   padding: 15px;
   display: flex;
@@ -98,7 +103,8 @@ body {
 .control {
   display: flex;
   justify-content: space-between;
-  background-color: white;
+  background-color: #454D5A;
+  color: #f5deb3;
   padding: 15px;
 }
 .control span {
@@ -110,9 +116,13 @@ body {
   font-size: 40px;
   text-align: center;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .finish .good {
-  color: var(--main-color);
+  color: orange;
 }
 .finish .bad {
   color: red;

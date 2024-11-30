@@ -3,22 +3,22 @@ const easyLvlWords = [
   "Hello",
   "Code",
   "Town",
-  "Country",
-  "Testing",
-  "Youtube",
-  "Twitter",
-  "Github",
-  "Python",
-  "Scala",
-  "Coding",
-  "Funny",
-  "Task",
-  "Runner",
-  "Roles",
-  "Test",
-  "Rust",
-  "Encore",
-  "trade",
+  // "Country",
+  // "Testing",
+  // "Youtube",
+  // "Twitter",
+  // "Github",
+  // "Python",
+  // "Scala",
+  // "Coding",
+  // "Funny",
+  // "Task",
+  // "Runner",
+  // "Roles",
+  // "Test",
+  // "Rust",
+  // "Encore",
+  // "trade",
   "Free",
 ];
 
@@ -70,31 +70,15 @@ let hardLvlWords = [
 
 // Setting Levels
 const lvls = {
-  "easy"  : 7,
-  "normal": 5,
+  "easy"  : 5,
+  "normal": 4,
   "hard"  : 3
 };
-
-// Default level
-let defaultLevel        = "easy";
-// let d = document.querySelectorAll(".difficulty input");
-// let arr = Array.from(d);
-// for (let i = 0; i < arr.length; i++) {
-//   arr[i].addEventListener("change", function() {
-//     defaultLevel = this.value;
-//   });
-// }
-let defaultLevelSeconds = lvls[defaultLevel];
-
-let words = defaultLevel === "easy" 
-        ? [...easyLvlWords] 
-            : defaultLevel === "normal" 
-                ? [...normalLvlWords] : [...hardLvlWords];
 
 // Selectors
 let startBtn      = document.querySelector(".start");
 let wordDisplay   = document.querySelector(".the-word");
-let lvlName       = document.querySelector(".message .lvls");
+let msg           = document.querySelector(".message");
 let secondsSpan   = document.querySelector(".message .seconds");
 let upcomingWords = document.querySelector(".upcoming-words");
 let input         = document.querySelector(".input");
@@ -103,11 +87,27 @@ let scoreGot      = document.querySelector(".score .got");
 let scoreTotal    = document.querySelector(".score .total");
 let finishMessage = document.querySelector(".finish");
 
-// lvlNameSpan.innerHTML   = defaultLevel;
-console.log(lvlName.value);
+// Default level
+let defaultLevel        = "easy";
+let defaultLevelSeconds = lvls[defaultLevel];
+let lvlName             = document.querySelector(".message .lvls");
+let words               = [...easyLvlWords];
+
 secondsSpan.innerHTML   = defaultLevelSeconds;
 timeLeftSpan.innerHTML  = defaultLevelSeconds;
 scoreTotal.innerHTML    = words.length;
+
+lvlName.onchange  = function () {
+  defaultLevel        = lvlName.value;
+  defaultLevelSeconds = lvls[lvlName.value];
+  secondsSpan.innerHTML   = defaultLevelSeconds;
+  timeLeftSpan.innerHTML  = defaultLevelSeconds;
+  words = lvlName.value === "easy" 
+        ? [...easyLvlWords] 
+            : defaultLevel === "normal" 
+                ? [...normalLvlWords] : [...hardLvlWords];
+  // location.reload();
+}
 
 // Disable paste event
 input.onpaste = function () {
@@ -159,21 +159,29 @@ function startPlay() {
           // Call Generate Word Function
           generateWord();
         } else {
-          let span        = document.createElement("span");
-          span.className  = 'good';
-          let spanText    = document.createTextNode("Congratz");
-          span.appendChild(spanText);
-          finishMessage.appendChild(span);
-          // Remove Upcoming Words Box
-          upcomingWords.remove();
+          // Win The Game
+          manageGameWinOrLose("good", "Congratz", "imgs/win.png");
         }
       } else {
-        let span        = document.createElement("span");
-        span.className  = 'bad';
-        let spanText    = document.createTextNode("Game Over");
-        span.appendChild(spanText);
-        finishMessage.appendChild(span);
+        // Lose The Game
+        manageGameWinOrLose("bad", "Game Over", "imgs/lose.png");
       }
     }
   }, 1000);
+}
+
+function manageGameWinOrLose(spanClass, message, imgSrc) {
+  let span        = document.createElement("span");
+  let img         = document.createElement("img");
+  span.className  = spanClass;
+  let spanText    = document.createTextNode(message);
+  img.src         = imgSrc;
+  span.appendChild(spanText);
+  finishMessage.appendChild(span);
+  finishMessage.appendChild(img);
+  wordDisplay.remove();
+  upcomingWords.remove();
+  msg.remove();
+  input.remove();
+  let reload     = setInterval(() => {location.reload();}, 3000);
 }
